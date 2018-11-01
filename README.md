@@ -16,13 +16,15 @@
 
 6）message 需要包装在 transaction 里面，transaction 需要有对应的 Decoder。
 
-以上这些 basecoin 基本完成，multicoin 就是在 basecoin 的基础上继续开发的。
+    以上这些 basecoin 基本完成，multicoin 就是在 basecoin 的基础上继续开发的。
 
 ## 编解码
 
-问题：transaction 里面可以包含多种 message 类型，而在 golang 中很难将一个 bytes 数组 decode 为一个 interface 类型，然后再根据 message 类型来分别处理。
+问题：transaction 里面可以包含多种 message 类型，需要先 decode 为 interface，然后再根据 message 类型来分开处理。而在 golang 中没有内置的将一个 bytes 数组 decode 为一个 interface 类型的方法。
 
-解法：Tendermint 库中引入了 amino 编解码，就是为了解决上面的问题。需要先将具体的 struct register；
+解法：Tendermint 库中引入了 amino 编解码，就是为了解决上面的问题。需要先将具体的 struct register 为一个全局唯一的名称，然后在编码的时候携带该名称，这样解码的时候就知道类型。
+
+    在 APP 中引入新的模块时，需要同时调用对应的 RegisterWire 函数。multicoin 引入 stake 和 gov 是就调用了：stake.RegisterWire(cdc) 和 gov.RegisterWire(cdc)。
 
 anteHandler 是全局的函数，在handler 之前执行，主要是为了验证交易和Fee。
 3、使用标准的 x/auth 实现 Account 以及 签名验证（首次签名的 Account 要带上pubKey），x/bank 实现 代币的转移；使用最小权限原则，用 Mapper 封装 KVStore，用 Keeper 封装 Mapper。
