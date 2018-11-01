@@ -12,7 +12,12 @@
 
 4）运行APP，完成初始化，加载存储数据，监听各种 message，timer，event，signal；
 
-5）handler处理 message 完成状态转换，并将结果存入Store；message需要包装在transaction里面，transaction需要有对应的Decoder。
+5）handler 处理 message 完成状态转换，并将结果存入 KVStore；
+
+6）message 需要包装在 transaction 里面，transaction 需要有对应的 Decoder。
+
+以上这些 basecoin 基本完成，multicoin 就是在 basecoin 的基础上继续开发的。
+
 2、在 golang 中很难将bytes decode为 interface 类型，amino 就是为了解决这个问题，需要现将具体的 struct register；anteHandler 是全局的函数，在handler 之前执行，主要是为了验证交易和Fee。
 3、使用标准的 x/auth 实现 Account 以及 签名验证（首次签名的 Account 要带上pubKey），x/bank 实现 代币的转移；使用最小权限原则，用 Mapper 封装 KVStore，用 Keeper 封装 Mapper。
 4、InitChainer 在 APP 首次启动时会被 Tendermint 调用一次，用来初始化 coinbase Account。
