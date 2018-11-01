@@ -38,14 +38,31 @@
 
     multicoin 中引入的 stake 和 gov 模块 都是基于 Keeper 的访问。
 
-## 自定义 Init 阶段
-1、传入 moniker；生成 nodeKey；创建 validator。
+## 自定义 AppInit 阶段
 
-2、调用自定义的 AppInit.AppGenTx() 来完成：生成 privKey 和 secret phrase；初始化 Genesis transaction。
+Genesis transaction 和 state 是一条链的第一个共识。PS：Genesis 配置不同就不会加入同一个网络。：）
 
-3、调用自定义的 AppInit.AppGenState() 来完成：初始化 stakeData；创建 Genesis Account 并配置一定的 Token 和 coin；New validator，添加 Token，为stakeData pool 添加 Token。
+自定义 AppInit 阶段的好处是可以个性化定制创世参数。（GodMode）
+
+主要的步骤如下，其中 AppGenTx() 和 AppGenState() 是可以自定义的：
+
+1、传入 moniker，生成 nodeKey，创建 validator；
+
+2、调用自定义的 AppInit.AppGenTx() 来完成：
+
+1）生成 privKey 和 secret phrase；
+
+2）初始化 Genesis transaction。
+
+3、调用自定义的 AppInit.AppGenState() 来完成：
+
+1）创建 Genesis Account 并配置一定的 Token 和 coin；
+2）初始化 stake 模块的 GenesisState；
+3）New validator 并添加 Token，同时为stakeData pool 添加 Token。
 
 4、生成 genesis.json, config.toml, 写入 配置文件。
+
+    multicoin 在 自定义 AppInit 中为每个 Account 初始化了 Token，并为每个 validator 预支了 steak 用来做 PoS。
 
 ## Notes
 1、使用标准的 x/auth 实现 Account 以及 签名验证（首次签名的 Account 要带上pubKey），x/bank 实现 代币的转移；
