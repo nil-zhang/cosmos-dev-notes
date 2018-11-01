@@ -1,8 +1,8 @@
 # Multicoin
 
-## APP基础开发
+## APP基础开发框架
 
-1、在 cosmos-sdk 定义好的框架下面开发 APP，需要做的基本是下面几步：
+在 cosmos-sdk 定义好的框架下面开发 APP，需要做的基本是下面几步：
 
 1）首先是定义 APP 特有的 message 以及对应的 handler；
 
@@ -18,7 +18,13 @@
 
 以上这些 basecoin 基本完成，multicoin 就是在 basecoin 的基础上继续开发的。
 
-2、在 golang 中很难将bytes decode为 interface 类型，amino 就是为了解决这个问题，需要现将具体的 struct register；anteHandler 是全局的函数，在handler 之前执行，主要是为了验证交易和Fee。
+## 编解码
+
+问题：transaction 里面可以包含多种 message 类型，而在 golang 中很难将一个 bytes 数组 decode 为一个 interface 类型，然后再根据 message 类型来分别处理。
+
+解法：Tendermint 库中引入了 amino 编解码，就是为了解决上面的问题。需要先将具体的 struct register；
+
+anteHandler 是全局的函数，在handler 之前执行，主要是为了验证交易和Fee。
 3、使用标准的 x/auth 实现 Account 以及 签名验证（首次签名的 Account 要带上pubKey），x/bank 实现 代币的转移；使用最小权限原则，用 Mapper 封装 KVStore，用 Keeper 封装 Mapper。
 4、InitChainer 在 APP 首次启动时会被 Tendermint 调用一次，用来初始化 coinbase Account。
 
