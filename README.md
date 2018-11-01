@@ -1,4 +1,6 @@
-# Multicoin
+# Multicoin based on cosmos-sdk
+
+    code in here : https://github.com/nil-zhang/cosmos-sdk/tree/zhangzirong
 
 ## APP基础开发框架
 
@@ -16,7 +18,7 @@
 
 6）message 需要包装在 transaction 里面，transaction 需要有对应的 Decoder。
 
-    以上这些 basecoin 基本完成，multicoin 就是在 basecoin 的基础上继续开发的。
+    以上功能 basecoin 基本完成，multicoin 在 basecoin 的基础上新引入了 stake 和 gov 模块来完成多节点验证和治理。
 
 ## 编解码
 
@@ -65,10 +67,111 @@ Genesis transaction 和 state 是一条链的第一个共识。PS：Genesis 配�
     multicoin 在 自定义 AppInit 中为每个 Account 初始化了 Token，并为每个 validator 预支了 steak 用来做 PoS。
 
 ## Notes
+
 1、使用标准的 x/auth 实现 Account 以及 签名验证（首次签名的 Account 要带上pubKey），x/bank 实现 代币的转移；
 
 2、InitChainer 在 APP 首次启动时会被 Tendermint 调用一次，用来初始化 coinbase Account；
 
 3、anteHandler 是全局的函数，在handler 之前执行，主要是为了验证交易和Fee。
 
+## commands
+
+### 交易
+
+    multicli send --from=bob --to=cosmosaccaddr1vdf66zk4mpp37dmwgtzumzmdfm0j8dyx2rdrwv --amount=500aliceToken --sequence=0 --chain-id=test-chain-WGKIKk
+
+### 治理
+
+    multicli submit-proposal --title="First proposal" --description="Should we change the proposal voting period to 3 weeks?" —deposit=20steak --from=bob --type="Text" --chain-id=test-chain-WGKIKk
+
+    multicli deposit --proposal-id 4 --deposit=50aliceToken,20steak --from=bob --chain-id=test-chain-WGKIKk
+
+    multicli vote --proposal-id 1 --option="Yes" --from=bob --chain-id=test-chain-WGKIKk
+
+    multicli query-proposal --proposal-id 4
+
+    multicli query-vote --voter=cosmosaccaddr1cjculu99xcfys2umvxd5tvk50zurj2vry9ajrn --proposal-id 4
+
+## Example Result
+
+账户分析：有两种 Token 和一种 coin，其中 usaToken 是 transaction 转移过来的。（这也是 multicoin 名字的本意）
+
+    $ multicli account cosmosaccaddr1z3455sy5z60x37g58ny59maqnqsm2nx8jgygcl
+    {
+      "type": "multicoin/Account",
+      "value": {
+        "BaseAccount": {
+          "address": "cosmosaccaddr1z3455sy5z60x37g58ny59maqnqsm2nx8jgygcl",
+          "coins": [
+            {
+              "denom": "cnToken",
+              "amount": "1000"
+            },
+            {
+              "denom": "steak",
+              "amount": "50"
+            },
+            {
+              "denom": "usaToken",
+              "amount": "100"
+            }
+          ],
+          "public_key": null,
+          "account_number": "1",
+          "sequence": "0"
+        },
+        "name": ""
+      }
+    }
+
+## 多validators 分析
+
+    $ multicli validators
+    Validator
+    Owner: cosmosaccaddr1z3455sy5z60x37g58ny59maqnqsm2nx8jgygcl
+    Validator: cosmosvalpub1zcjduepqz38k93zdh99395qzzws947qupaskzx3wagm027f82q3cln60mves3c2us6
+    Revoked: false
+    Status: Bonded
+    Tokens: 100.0000000000
+    Delegator Shares: 100.0000000000
+    Description: {cn   }
+    Bond Height: 0
+    Proposer Reward Pool:
+    Commission: 0/1
+    Max Commission Rate: 0/1
+    Commission Change Rate: 0/1
+    Commission Change Today: 0/1
+    Previous Bonded Tokens: 0/1
+
+    Validator
+    Owner: cosmosaccaddr1yufef8a6dda7qr5ut7jlqp87xsfuch5m2urakx
+    Validator: cosmosvalpub1zcjduepqpajj0gk5lz79tdmsvaknjm6x0k3rsdagdukgxzpmu7h68xrh4dnqlq2m9z
+    Revoked: false
+    Status: Bonded
+    Tokens: 100.0000000000
+    Delegator Shares: 100.0000000000
+    Description: {usa   }
+    Bond Height: 0
+    Proposer Reward Pool:
+    Commission: 0/1
+    Max Commission Rate: 0/1
+    Commission Change Rate: 0/1
+    Commission Change Today: 0/1
+    Previous Bonded Tokens: 0/1
+
+    Validator
+    Owner: cosmosaccaddr1s9wjh3q3qdgneftespjh8w33k7cfs6hachhx9d
+    Validator: cosmosvalpub1zcjduepquz4y5vdghkyr22azgj86h0mh5a04w90h8l9rj26lzs0c6c8cqe9qgqwphr
+    Revoked: false
+    Status: Bonded
+    Tokens: 100.0000000000
+    Delegator Shares: 100.0000000000
+    Description: {eu   }
+    Bond Height: 0
+    Proposer Reward Pool:
+    Commission: 0/1
+    Max Commission Rate: 0/1
+    Commission Change Rate: 0/1
+    Commission Change Today: 0/1
+    Previous Bonded Tokens: 0/1
 
