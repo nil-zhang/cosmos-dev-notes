@@ -42,7 +42,9 @@
 
 ## 自定义 AppInit 阶段
 
-Genesis transaction 和 state 是一条链的第一个共识。PS：Genesis 配置不同就不会加入同一个网络。：）
+Genesis transaction 和 state 是一条链的第一个共识。
+
+    PS：Genesis 配置不同就不会加入同一个网络。：）
 
 自定义 AppInit 阶段的好处是可以个性化定制创世参数。（GodMode）
 
