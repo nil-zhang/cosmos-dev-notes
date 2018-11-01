@@ -2,7 +2,7 @@
 
     code in here : https://github.com/nil-zhang/cosmos-sdk/tree/zhangzirong
 
-## APP基础开发框架
+## APP 基础开发框架
 
 在 cosmos-sdk 定义好的框架下面开发 APP，需要做的基本是下面几步：
 
@@ -70,7 +70,7 @@ Genesis transaction 和 state 是一条链的第一个共识。PS：Genesis 配�
 
 3、anteHandler 是全局的函数，在handler 之前执行，主要是为了验证交易和Fee。
 
-## commands
+## Commands
 
 ### 交易
 
@@ -120,7 +120,7 @@ Genesis transaction 和 state 是一条链的第一个共识。PS：Genesis 配�
       }
     }
 
-## 多validators 分析
+## 多 validators 分析
 
     $ multicli validators
     Validator
