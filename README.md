@@ -52,15 +52,11 @@ Genesis transaction 和 state 是一条链的第一个共识。PS：Genesis 配�
 
 2、调用自定义的 AppInit.AppGenTx() 来完成：
 
-1）生成 privKey 和 secret phrase；
-
-2）初始化 Genesis transaction。
+1）生成 privKey 和 secret phrase；2）初始化 Genesis transaction。
 
 3、调用自定义的 AppInit.AppGenState() 来完成：
 
-1）创建 Genesis Account 并配置一定的 Token 和 coin；
-2）初始化 stake 模块的 GenesisState；
-3）New validator 并添加 Token，同时为stakeData pool 添加 Token。
+1）创建 Genesis Account 并配置一定的 Token 和 coin；2）初始化 stake 模块的 GenesisState；3）New validator 并添加 Token，同时为stakeData pool 添加 Token。
 
 4、生成 genesis.json, config.toml, 写入 配置文件。
 
