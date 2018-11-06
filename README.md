@@ -1,6 +1,8 @@
 # Multicoin based on cosmos-sdk
 
     code in here : https://github.com/nil-zhang/cosmos-sdk/tree/zhangzirong
+    
+    添加 IBC 跨链通信功能：https://github.com/nil-zhang/sharding-using-ibc
 
 ## APP 基础开发框架
 
