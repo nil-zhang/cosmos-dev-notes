@@ -1,7 +1,7 @@
 
 类似 ENS 的去中心化域名系统。
 
-commands：
+# commands
 
     multicli buy-name thefirstone  100aliceToken --from=alice --chain-id test-chain-qIUF5L
 
