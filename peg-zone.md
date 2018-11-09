@@ -36,9 +36,18 @@ Relayer 负责把 signer 签名的消息发送到 Ethereum smart contract。
 
 5、Bob 可以通过向 Ethereum smart contract 提交 RedeemTx 来将收到的 4 CEther 转回自己在 Ethereum 的账户；
 
-6、Signer 可以监听到 RedeemTx 并为之生成 Ethereum smart contract 可以验证的签名；然后通过 SignTx 将 签名发送给 PegZone；
+6、Signer 可以监听到 RedeemTx 并为之生成 Ethereum smart contract 可以验证的签名，然后通过 SignTx 将 签名发送给 PegZone；
 
 7、Relayer 监听 SignTx，在大于 2/3 的 validators （基于 voting power）已经提交 SignTx 之后，relayer 会将 SignTx 和原生的消息一起发送给 Ethereum smart contract。
 
 ## Cosmos 原生 token 转移
 
+1、Alice 在 cosmos 链上的账户拥有 10 Photons，可以通过 RedeemTx 将 10 Photons 全部发送给自己在 PegZone 的账户；
+
+2、Signer 监听到 RedeemTx 交易并为之生成 Ethereum smart contract 可以验证的签名，然后通过 SignTx 将 签名发送给 PegZone；
+
+3、Relayer 监听 SignTx，在大于 2/3 的 validators （基于 voting power）已经提交 SignTx 之后，relayer 会调用 Ethereum smart contract 的函数来触发发行 ERC20 token；
+
+4、Ethereum smart contract 首先会验证数据是被大于 2/3 的validators 签名的，然后为 Photons 生成 ERC20 合约，再会向 Alice 控制的地址发送 10 EPhotons token；
+
+5、
