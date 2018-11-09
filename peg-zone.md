@@ -14,5 +14,11 @@ Ethereum smart contract 是 Ethereum 原生资产的保管者，同时也是 cos
 
 witness 是一个 Ethereum 网络中的全节点，可以证实 Ethereum 的状态，并实现在交易确认等待一定区块高度阈值之后来证实状态的确定性。主要的职能是关注 Ethereum 网络中的 Event 并给 pegzone 发送相关消息。
 
+pegzone 是一条适配链，用户可以把资产存储在这条链，也可以通过交易把资产转移给链上的其他用户。当然最重要的是可以和 Ethereum 发送和接收资产；同时也可以和其他链通过 IBC 跨链交易。
+
+signer 负责对消息进行签名转换，从而使 Ethereum smart contract 可以进行验证。这些消息包含了发行到 Ethereum 链上的 token 信息。
+
+relayer 负责把 signer 签名的消息发送到 Ethereum smart contract。
+
 ![images](https://github.com/nil-zhang/cosmos-dev-notes/blob/master/cosmos-peg-zone.png)
 
