@@ -5,6 +5,10 @@
 ## 添加 IBC 跨链通信功能
 
     detail is here : https://github.com/nil-zhang/sharding-using-ibc
+    
+ ## 添加 Naming 名字服务
+ 
+    detail is here : https://github.com/nil-zhang/cosmos-dev-notes/blob/master/naming.md
 
 ## APP 基础开发框架
 
