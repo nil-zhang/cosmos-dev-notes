@@ -50,4 +50,13 @@ Relayer 负责把 signer 签名的消息发送到 Ethereum smart contract。
 
 4、Ethereum smart contract 首先会验证数据是被大于 2/3 的validators 签名的，然后为 Photons 生成 ERC20 合约，再会向 Alice 控制的地址发送 10 EPhotons token；
 
-5、
+5、Alice 可以在 Ethereum 上将 4 EPhotons 发送给 Bob；
+
+6、Bob 可以发起交易，将 4 EPhotons 发送给自己在 PegZone 的地址，并将交易发送给 Ethereum smart contract；smart contract 会燃烧这些 token 并生成一个 event；
+
+7、Witness 证实 4 EPhotons 确实被燃烧并向 PegZone 发送 WitnessTx；
+
+8、PegZone 收到 WitnessTx 并给 Bob 的账户发放 4 Photons。
+
+
+
